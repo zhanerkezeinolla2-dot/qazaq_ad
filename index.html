@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qazaq-Ad | Жарнама тілінің көмекшісі</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        p.subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 25px;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px 15px;
+            font-size: 16px;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #27ae60;
+        }
+        button {
+            padding: 12px 25px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        .result-card {
+            background: #f8f9fa;
+            border-left: 5px solid #27ae60;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-top: 15px;
+            display: none;
+        }
+        .error-text {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        .correct-text {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Qazaq-Ad</h1>
+    <p class="subtitle">Шағын бизнеске арналған сауатты қазақша жарнама шаблондары</p>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Мысалы: В наличии, Скидки, Открылись...">
+        <button onclick="checkAd()">Тексеру</button>
+    </div>
+
+    <div id="resultContainer" class="result-card">
+        <p><strong>Іздеу нәтижесі:</strong></p>
+        <p>Қате нұсқа: <span id="wrongResult" class="error-text"></span></p>
+        <p>Дұрыс қазақша нұсқасы: <span id="correctResult" class="correct-text"></span></p>
+    </div>
+</div>
+
+<script>
+    // Жарнама сөздігінің базасы
+    const adDatabase = {
+        "в наличии": { wrong: "Бар болуында", correct: "Сатылымда бар / Бар" },
+        "мы открылись": { wrong: "Біз ашылдық!", correct: "Есігіміз ашық! / Біз жұмысымызды бастадық!" },
+        "возьми с собой": { wrong: "Өзіңмен бірге ал", correct: "Өзіңмен ала кет" },
+        "горячие скидки": { wrong: "Ыстық жеңілдіктер", correct: "Тиімді жеңілдіктер / Үлкен жеңілдіктер" },
+        "сделай сам": { wrong: "Өзің жаса", correct: "Өзің құрастыр / Қолдан жаса" },
+        "живая музыка": { wrong: "Тірі музыка", correct: "Жанды дауыстағы әуен / Жанды дауыс" },
+        "свободная касса": { wrong: "Еркін касса", correct: "Касса бос" },
+        "скидки до 50%": { wrong: "50% жеңілдіктерге дейін", correct: "50%-ға дейін жеңілдік" }
+    };
+
+    function checkAd() {
+        let inputVal = document.getElementById("searchInput").value.toLowerCase().trim();
+        let resultCard = document.getElementById("resultContainer");
+        let wrongSpan = document.getElementById("wrongResult");
+        let correctSpan = document.getElementById("correctResult");
+
+        if (adDatabase[inputVal]) {
+            wrongSpan.innerText = adDatabase[inputVal].wrong;
+            correctSpan.innerText = adDatabase[inputVal].correct;
+            resultCard.style.display = "block";
+        } else {
+            wrongSpan.innerText = "Мәлімет базасында бұл сөз жоқ немесе қателік тіркелмеген.";
+            correctSpan.innerText = "Мәтініңіз грамматикалық тұрғыдан дұрыс болуы мүмкін.";
+            resultCard.style.display = "block";
+        }
+    }
+</script>
+
+</body>
+</html>
